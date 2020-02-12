@@ -159,7 +159,7 @@ Finished in 0.04 seconds
 We are using
 [`ex_aws_lambda`](https://github.com/ex-aws/ex_aws_lambda)
 which depends on
-[`ex_aws_lambda`](https://github.com/ex-aws/ex_aws_lambda),
+[`ex_aws_lambda`](https://github.com/ex-aws/ex_aws_lambda), <br />
 which in turn requires an HTTP library
 [`hackney`](https://github.com/benoitc/hackney)
 and JSON library
@@ -171,7 +171,7 @@ in the `mix.exs` file:
 
 
 ```elixir
-    {:ex_aws, "~> 2.0"},
+    {:ex_aws, "~> 2.1.0"},
     {:ex_aws_lambda, "~> 2.0"},
     {:hackney, "~> 1.9"},
     {:poison, "~> 3.0"},
