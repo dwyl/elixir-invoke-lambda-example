@@ -1,7 +1,18 @@
+<div align="center">
+
 # Elixir Invoke Lambda Example λ
 
 A basic example showing how to invoke AWS Lambda functions
 from Elixir/Phoenix Apps.
+
+<!--
+[![Build Status](https://img.shields.io/travis/dwyl/aws-lambda-deploy/master.svg?style=flat-square)](https://travis-ci.org/dwyl/aws-lambda-deploy)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/aws-lambda-deploy/master.svg?style=flat-square)](http://codecov.io/github/dwyl/aws-lambda-deploy?branch=master)
+[![HitCount](http://hits.dwyl.com/dwyl/aws-lambda-deploy.svg)](http://hits.dwyl.com/dwyl/aws-lambda-deploy)
+-->
+
+</div>
+<br />
 
 ## Why? 🤷‍
 
@@ -56,22 +67,53 @@ and some basic JavaScript exposure,
 you will be able to dive straight into the example below!
 
 Just ensure that you have
-the latest Elixir and Phoenix
-installed on your `localhost`
+the _latest_
+[Elixir](https://elixir-lang.org/install.html#distributions),
+[Phoenix](https://hexdocs.pm/phoenix/installation.html)
+and
+[Postgres](https://github.com/dwyl/learn-postgresql#installation)
+installed on your **`localhost`**
 before beginning.
+
+```sh
+elixir -v
+Elixir 1.10.1 (compiled with Erlang/OTP 22)
+
+mix phx.new -v
+v1.4.12
+
+psql --version
+psql (PostgreSQL) 12.1
+```
+
 
 If you are new to (or rusty on) Elixir/Phoenix,
 we _recommend_ reading
-[dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir)
+[dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir) <br />
 and following the
 [dwyl/**phoenix-chat-example**](https://github.com/dwyl/phoenix-chat-example)
 which is a "_my first phoenix app_".
 
 You don't need to have _any_ knowledge of AWS Lambda,
 but if you are curious to learn,
-see:
+read:
 [dwyl/**learn-aws-lambda**](https://github.com/dwyl/learn-aws-lambda)
 
-<br />
+
 
 ### 1. Create a Phoenix Project 🆕
+
+In your terminal, create a new Phoenix app using the command:
+
+```sh
+mix phx.new app
+```
+
+To start your Phoenix server:
+
+  * Install dependencies with `mix deps.get`
+  * Create and migrate your database with `mix ecto.setup`
+  * Install Node.js dependencies with `cd assets && npm install && cd ..`
+  * Start Phoenix endpoint with `mix phx.server`
+
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
