@@ -42,7 +42,13 @@ defmodule App.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+
+      # Invoke Lambda
+      {:ex_aws, "~> 2.0"},
+      {:ex_aws_lambda, "~> 2.0"},
+      {:poison, "~> 3.0"},
+      {:hackney, "~> 1.9"},
     ]
   end
 

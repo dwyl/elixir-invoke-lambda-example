@@ -1,4 +1,5 @@
 {
+  "description": "Invoke a Lambda function from an Elixir/Phoenix App",
   "repository": {},
   "license": "MIT",
   "scripts": {

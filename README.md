@@ -1,6 +1,6 @@
 <div align="center">
 
-# Elixir Invoke Lambda Example λ
+# `Elixir` Invoke `Lambda` _Example_ λ
 
 A basic example showing how to invoke AWS Lambda functions
 from Elixir/Phoenix Apps.
@@ -109,11 +109,76 @@ In your terminal, create a new Phoenix app using the command:
 mix phx.new app
 ```
 
-To start your Phoenix server:
+Ensure you install all the dependencies:
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Install Node.js dependencies with `cd assets && npm install && cd ..`
-  * Start Phoenix endpoint with `mix phx.server`
+```sh
+mix deps.get
+cd assets && npm install && cd ..
+```
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Setup the database:
+
+```sh
+mix ecto.setup
+```
+
+Start the Phoenix server:
+
+```sh
+mix phx.server
+```
+
+Now you can visit
+[`localhost:4000`](http://localhost:4000)
+from your web browser.
+
+![phoenix-default-homepage](https://user-images.githubusercontent.com/194400/74361992-c2c4ef80-4dbf-11ea-8112-2dcf6dcf1c51.png)
+
+Also make sure you run the tests to ensure everything works as expected:
+
+```sh
+mix test
+```
+
+You should see:
+
+```sh
+Compiling 16 files (.ex)
+Generated app app
+
+17:49:40.111 [info]  Already up
+...
+
+Finished in 0.04 seconds
+3 tests, 0 failures
+```
+
+
+### 2. Add `ex_aws_lambda` dependency to `deps`
+
+We are using
+[`ex_aws_lambda`](https://github.com/ex-aws/ex_aws_lambda)
+which depends on
+[`ex_aws_lambda`](https://github.com/ex-aws/ex_aws_lambda),
+which in turn requires an HTTP library
+[`hackney`](https://github.com/benoitc/hackney)
+and JSON library
+[`poison`](https://github.com/devinus/poison).
+
+
+Add the following lines to the `deps` list
+in the `mix.exs` file:
+
+
+```elixir
+    {:ex_aws, "~> 2.0"},
+    {:ex_aws_lambda, "~> 2.0"},
+    {:hackney, "~> 1.9"},
+    {:poison, "~> 3.0"},
+```
+
+Then run:
+
+```sh
+mix deps.get
+```
