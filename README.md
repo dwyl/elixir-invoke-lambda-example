@@ -1,4 +1,4 @@
-# Elixir Lambda Invoke Example λ
+# Elixir Invoke Lambda Example λ
 
 A basic example showing how to invoke AWS Lambda functions
 from Elixir/Phoenix Apps.
