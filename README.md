@@ -424,9 +424,7 @@ In your terminal, open `iex`:
 iex -S mix
 ```
 
-Then _invoke_ the Lambda by typing
-`AppWeb.InvokeLambdaController.invoke`
-and paste the following variable:
+Paste the following `payload` variable:
 
 ```elixir
 payload = %{
@@ -465,10 +463,17 @@ Check your email inbox, you should expect to see something like this:
 
 ![elixir-lover-email-received](https://user-images.githubusercontent.com/194400/74458691-fff1b600-4e81-11ea-8d09-49490c61baae.png)
 
+<br />
 
+## Congratulations You just invoked an AWS Lambda Function from Elixir! 🎉
+
+<br />
 
 
 ### 6. Continuous Integration!
+
+This wouldn't be a dwyl project without
+independent verification from our friends at Travis-CI!
 
 
 https://docs.aws.amazon.com/ses/latest/DeveloperGuide/mailbox-simulator.html
