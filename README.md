@@ -468,9 +468,59 @@ Check your email inbox, you should expect to see something like this:
 <br /><br />
 
 
-### 6. Continuous Integration [![Build Status](https://img.shields.io/travis/dwyl/elixir-invoke-lambda-example
-/master.svg?style=flat-square)](https://travis-ci.org/dwyl/elixir-invoke-lambda-example
-)
+### 7. _Conclusion_!
+
+If you distil the code required
+to invoke an AWS Lambda function from Elixir,
+there are fewer than 10 lines.
+
+**4 lines** added to **`mix.exs`**:
+
+```elixir
+{:ex_aws, "~> 2.1.0"},
+{:ex_aws_lambda, "~> 2.0"},
+{:hackney, "~> 1.9"},
+{:poison, "~> 3.0"},
+```
+
+**3 environment variables** added to `.env`:
+
+```env
+export AWS_REGION=eu-west-1
+export AWS_ACCESS_KEY_ID=YOURACCESSKEYID
+export AWS_SECRET_ACCESS_KEY=SUPERSECRETACCESSKEY
+```
+
+> If you already had these environment variables
+on in your Production environment for any other reason,
+there was less to add!
+
+**2 lines** of `Elixir` code
+to _invoke_ the function
+from anywhere in your `Phoenix` app:
+
+```elixir
+ExAws.Lambda.invoke("aws-ses-lambda-v1", payload, "no_context")
+|> ExAws.request(region: System.get_env("AWS_REGION"))
+```
+
+Where the `payload` is whatever `Map` of data
+your Lambda expects to receive.
+Or _nothing_ at all if the Lambda function takes no input.
+
+We believe this is a very viable way to offload
+specific bits of functionality to AWS Lambda
+from our Elixir/Phoenix apps! 🚀
+
+<br />
+
+Thanks for learning with us!
+If you enjoyed this quest, please ⭐️ the GitHub repo
+to show your delight!
+
+<br /><br />
+
+### Continuous Integration [![Build Status](https://img.shields.io/travis/dwyl/elixir-invoke-lambda-example/master.svg?style=flat-square)](https://travis-ci.org/dwyl/elixir-invoke-lambda-example)
 
 This wouldn't be a dwyl example without
 independent verification that it _works_
@@ -487,15 +537,9 @@ see:
 https://docs.aws.amazon.com/ses/latest/DeveloperGuide/mailbox-simulator.html
 
 Set the **`RECIPIENT_EMAIL`** to "**success@simulator.amazonses.com**"
-
 e.g:
 [.travis.yml#L20](https://github.com/dwyl/elixir-invoke-lambda-example/blob/master/.travis.yml#L20)
 
-Works like a charm.
-
-
-
-### 7. _Conclusion_!
 
 
 
