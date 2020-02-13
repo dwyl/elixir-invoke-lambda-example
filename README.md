@@ -82,7 +82,7 @@ elixir -v
 Elixir 1.10.1 (compiled with Erlang/OTP 22)
 
 mix phx.new -v
-v1.4.12
+v1.4.13
 
 psql --version
 psql (PostgreSQL) 12.1
@@ -206,14 +206,14 @@ Then run:
 mix deps.get
 ```
 
-### 3. Environment Variables 🔐
+### 3. Environment Variables 🔐
 
 In order to _invoke_ a AWS Lambda function
 (_and **specifically** our **`aws-ses-lambda`**_),
 we need a handful of Environment Variables to be defined.
 
 To speed this up, we created an
-[`.env_sample`]()
+[`.env_sample`](https://github.com/dwyl/elixir-invoke-lambda-example/blob/master/.env_sample)
 file that has all the Environment Variables you need:
 
 ```
@@ -234,14 +234,15 @@ cp .env_sample .env && echo ".env\n" > .gitignore
 Then update the values to your _real_ ones!
 
 Finally run `source .env` in your terminal.
-Confirm that
+Confirm that the environment variables are loaded by
+running the **`printenv`** commnad.
 
 
 > Note: If you are new to Environment Variables,
 see: https://github.com/dwyl/learn-environment-variables
 
 
-### 4. Write a Test! 🔴😮
+### 4. Write a Test! 🔴😮
 
 Yes, even in these simple examples,
 we can still follow Test Driven Development
@@ -251,7 +252,31 @@ to _always_ write tests!
 This way you _know_ the Lambda invocation
 works _exactly_ the way you expect it to!
 
+Create a _new_ file called
+`test/app_web/controllers/invoke_lambda_test.exs`
 
+
+
+
+
+
+> **Side note**:
+I did't get much out of reading the
+[Docs](https://hexdocs.pm/ex_aws/ExAws.html)
+for [`ex_aws`](https://github.com/ex-aws/ex_aws)
+so I ended up reading the _tests_
+in order to undestand how the package works:
+[/test/ex_aws/auth_test.exs](https://github.com/ex-aws/ex_aws/blob/ecd51b1965909119ee597d6c0783334e30e59e58/test/ex_aws/auth_test.exs)
+Don't bother reading the tests for
+[`ex_aws_lambda`](https://github.com/ex-aws/ex_aws_lambda)
+they
+[aren't very good](https://github.com/dwyl/aws-ses-lambda/issues/8#issuecomment-585360225)
+... <br />
+Moral of the story:
+**_always_ write good tests** for your code.
+Other people will read them
+and ~~_totally_ judge you as a developer~~
+learn how you implement things. 😜
 
 
 
@@ -261,7 +286,8 @@ works _exactly_ the way you expect it to!
 
 
 
-#### Invoke in `iex`
+
+#### 5.1 Invoke in `iex`
 
 In your terminal, open `iex`:
 
@@ -283,14 +309,14 @@ iex(1)> AppWeb.PageController.invoke
  }}
 ```
 
-
+<br /><br />
 
 ### Trouble Shooting 🤷‍
 
 If you forget to include some data
-you will get a friendly error message
+you will get a friendly error message. <br />
 e.g: In this case I didn't have
-the `RECIPIENT_EMAIL` environment variable defined
+the `RECIPIENT_EMAIL_ADDRESS` environment variable defined <br />
 so there was no "**To**" (_email address_) defined in the `event`:
 
 ```elixir
@@ -317,7 +343,8 @@ that the **`ex_aws`** package returned an
 an **`:error`** should not be "**`:ok`**" ... 🙄
 but let's not get hung up on it.
 
-When we _did_ correctly set the `RECIPIENT_EMAIL` environment variable
+When we _did_ correctly set
+the `RECIPIENT_EMAIL_ADDRESS` environment variable, <br />
 we got the following success message confirming the email was sent:
 ```elixir
 {:ok,
