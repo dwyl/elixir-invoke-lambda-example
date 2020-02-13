@@ -222,8 +222,8 @@ mix deps.get
 ### 3. Environment Variables 🔐
 
 In order to _invoke_ a AWS Lambda function
-(_and **specifically** our **`aws-ses-lambda`**_),
-we need a handful of Environment Variables to be defined.
+(_and **specifically** our **`aws-ses-lambda`**_), <br />
+we need three Environment Variables to be defined.
 
 To speed this up, we created an
 [`.env_sample`](https://github.com/dwyl/elixir-invoke-lambda-example/blob/master/.env_sample)
@@ -233,8 +233,6 @@ file that has all the Environment Variables you need:
 export AWS_REGION=eu-west-1
 export AWS_ACCESS_KEY_ID=YOURACCESSKEYID
 export AWS_SECRET_ACCESS_KEY=SUPERSECRETACCESSKEY
-export SENDER_EMAIL_ADDRESS=your.ses.verified@email.com
-export RECIPIENT_EMAIL="yourname+elixir.invoke@gmail.com"
 ```
 
 Copy this file into a _new_ file called `.env`.
@@ -246,12 +244,19 @@ cp .env_sample .env && echo ".env\n" > .gitignore
 
 Then update the values to your _real_ ones!
 
-Finally run `source .env` in your terminal.
-Confirm that the environment variables are loaded by
+> **Note**: we added a **`RECIPIENT_EMAIL_ADDRESS`**
+environment variable to store the email address
+of the person we are sending our test email to,
+just so that we don't _hard code_
+our personal email address into code on GitHub. 💭
+
+Finally run `source .env` in your terminal
+to _load_ the environment variables. <br />
+_Confirm_ that the environment variables are loaded by
 running the **`printenv`** commnad.
 
 
-> Note: If you are new to Environment Variables,
+> 💡 **Tip**: If you are new to Environment Variables,
 see: https://github.com/dwyl/learn-environment-variables
 
 
