@@ -253,7 +253,7 @@ our personal email address into code on GitHub. 💭
 Finally run `source .env` in your terminal
 to _load_ the environment variables. <br />
 _Confirm_ that the environment variables are loaded by
-running the **`printenv`** commnad.
+running the **`printenv`** command.
 
 
 > 💡 **Tip**: If you are new to Environment Variables,
@@ -265,8 +265,8 @@ see: https://github.com/dwyl/learn-environment-variables
 Yes, even in these simple examples,
 we can still follow Test Driven Development
 ([TDD](https://github.com/dwyl/learn-tdd)),
-in fact it's a _really_ good idea
-to _always_ write tests!
+in fact it's a **_really_ good idea**
+to **_always_ write tests**!
 This way you _know_ the Lambda invocation
 works _exactly_ the way you expect it to!
 
@@ -344,9 +344,9 @@ Finished in 0.04 seconds
 
 This is just telling us that the
 `AppWeb.InvokeLambdaController.invoke`
-function does not _exist_.
+function does not _exist_. <br />
 This is not "_news_" as we have not yet _created_ it!
-But it's good to know that the test _runs_.
+But it's good to know that the test _runs_. <br/>
 We feel satisfied that we've completed the "Red" stage of the TDD
 ["Red, Green, Refactor"](https://github.com/dwyl/learn-tdd#how)
 cycle. 🔴
@@ -405,7 +405,7 @@ Re-run the test:
 mix test test/app_web/controllers/invoke_lambda_test.exs
 ```
 
-You should see the following output:
+You should see the following output indicating _success_:
 
 ```elixir
 Compiling 1 file (.ex)
@@ -418,6 +418,11 @@ MessageId: "010201703f687a8b-331c3cf8-853e-4bac-850f-51ab5b2a7474-000000"
 Finished in 1.6 seconds
 1 test, 0 failures
 ```
+
+The test passes using the
+**`success@simulator.amazonses.com`**
+email address. <br />
+Next let's try sending an email to a _real_ email address!
 
 
 #### 5.1 Invoke in `iex` ✉️
@@ -433,14 +438,18 @@ Paste the following `payload` variable:
 ```elixir
 payload = %{
   name: "Elixir Lover",
-  email: System.get_env("RECIPIENT_EMAIL"),
+  email: System.get_env("RECIPIENT_EMAIL_ADDRESS"),
   template: "welcome"
 }
 ```
+
+Make sure you have the `RECIPIENT_EMAIL_ADDRESS` environment variable
+defined from **step 2** above.
+
 Then invoke the function:
 `AppWeb.InvokeLambdaController.invoke(payload)`
 
-e.g:
+Sample output from `iex`:
 
 ```elixir
 iex(1)> payload = %{
@@ -499,7 +508,7 @@ export AWS_SECRET_ACCESS_KEY=SUPERSECRETACCESSKEY
 
 > If you already had these environment variables
 on in your Production environment for any other reason,
-there was less to add!
+it's less to add!
 
 **2 lines** of `Elixir` code
 to _invoke_ the function
@@ -511,7 +520,7 @@ ExAws.Lambda.invoke("aws-ses-lambda-v1", payload, "no_context")
 ```
 
 Where the `payload` is whatever `Map` of data
-your Lambda expects to receive.
+your Lambda expects to receive. <br />
 Or _nothing_ at all if the Lambda function takes no input.
 
 We believe this is a very viable way to offload
@@ -530,7 +539,7 @@ to show your delight!
 
 This wouldn't be a dwyl example without
 independent verification that it _works_
-from our friends at Travis-CI!
+from our friends at Travis-CI! 😉
 
 > If you're new to Travis-CI or Continuous Integration,
 see: https://github.com/dwyl/learn-travis
@@ -542,7 +551,7 @@ instead of sending lots of email to a _real_ address.
 see:
 https://docs.aws.amazon.com/ses/latest/DeveloperGuide/mailbox-simulator.html
 
-Set the **`RECIPIENT_EMAIL`** to "**success@simulator.amazonses.com**"
+Set the **`RECIPIENT_EMAIL_ADDRESS`** to "**success@simulator.amazonses.com**"
 e.g:
 [.travis.yml#L20](https://github.com/dwyl/elixir-invoke-lambda-example/blob/master/.travis.yml#L20)
 
