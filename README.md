@@ -343,9 +343,7 @@ This is just telling us that the
 function does not _exist_.
 This is not "_news_" as we have not yet _created_ it!
 But it's good to know that the test _runs_.
-There's enough _red_ in that failed test output
-for us to feel satisfied that we've completed
-the "Red" stage of the TDD
+We feel satisfied that we've completed the "Red" stage of the TDD
 ["Red, Green, Refactor"](https://github.com/dwyl/learn-tdd#how)
 cycle. 🔴
 
@@ -376,23 +374,46 @@ learn how you implement things. 😜
 -->
 
 
-
-
 ### 5. Write the `invoke` Function to Make the Test _Pass_! ✅
 
 
+Create a new file called
+[`lib/app_web/controllers/invoke_lambda_controller.ex`]()
 
+And add the following code to the file:
 
 ```elixir
+defmodule AppWeb.InvokeLambdaController do
 
-def invoke(payload) do
-  ExAws.Lambda.invoke("aws-ses-lambda-v1", payload, "no_context")
-  |> ExAws.request(region: System.get_env("AWS_REGION"))
+  @doc """
+  `invoke/1` uses ExAws.Lambda.invoke to invoke our aws-ses-lambda-v1 function.
+  """
+  def invoke(payload) do
+    ExAws.Lambda.invoke("aws-ses-lambda-v1", payload, "no_context")
+    |> ExAws.request(region: System.get_env("AWS_REGION"))
+  end
 end
-
 ```
 
+Re-run the test:
 
+```sh
+mix test test/app_web/controllers/invoke_lambda_test.exs
+```
+
+You should see the following output:
+
+```elixir
+Compiling 1 file (.ex)
+Generated app app
+
+16:36:14.994 [info]  Already up
+MessageId: "010201703f687a8b-331c3cf8-853e-4bac-850f-51ab5b2a7474-000000"
+.
+
+Finished in 1.6 seconds
+1 test, 0 failures
+```
 
 
 #### 5.1 Invoke in `iex`
