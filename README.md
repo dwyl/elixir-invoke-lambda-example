@@ -109,7 +109,7 @@ that handles sending email
 using AWS Simple Email Service (SES).
 The setup and deployment instructions
 are all included in
-[https://github.com/dwyl/aws-ses-lambda**#how**](https://github.com/dwyl/aws-ses-lambda#how-)
+[**How**? section](https://github.com/dwyl/aws-ses-lambda#how-)
 
 You need to _deploy_ the Lambda function
 and _test_ it in the AWS console
@@ -416,7 +416,7 @@ Finished in 1.6 seconds
 ```
 
 
-#### 5.1 Invoke in `iex`
+#### 5.1 Invoke in `iex` ✉️
 
 In your terminal, open `iex`:
 
@@ -465,21 +465,31 @@ Check your email inbox, you should expect to see something like this:
 
 <br />
 
-## Congratulations You just invoked an AWS Lambda Function from Elixir! 🎉
+## Congratulations! You just invoked an AWS Lambda Function from `Elixir`! 🎉
 
-<br />
+<br /><br />
 
 
-### 6. Continuous Integration!
+### 6. Continuous Integration
 
-This wouldn't be a dwyl project without
-independent verification from our friends at Travis-CI!
+This wouldn't be a dwyl example without
+independent verification that it _works_
+from our friends at Travis-CI!
+
+
+> If you're new to Travis-CI or Continuous Integration,
+see: https://github.com/dwyl/learn-travis
+
+
 
 
 https://docs.aws.amazon.com/ses/latest/DeveloperGuide/mailbox-simulator.html
 
 
 success@simulator.amazonses.com
+
+### 7. _Conclusion_!
+
 
 
 <br /><br />
