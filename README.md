@@ -16,12 +16,12 @@ from Elixir/Phoenix Apps.
 
 ## Why? 🤷‍
 
-To keep our Elixir/Phoenix App
+To keep our `Elixir`/`Phoenix` App
 as _focussed_ as possible,
 we are ***delegating*** all
 of the **_non-core_ functionality**
 to **AWS Lambda** functions.
-AWS Lambda will allow us
+AWS Lambda allows us
 to offload specific non-core functionality
 such as sending/receiving emails and
 uploading/resizing/transcoding images/video.
@@ -29,13 +29,15 @@ This non-core functionality
 still needs to work _flawlessly_
 but it will not be invoked directly by end-users.
 Rather the Lambda functions
-will be invoked asynchronously
-by our Elixir/Phoenix
+will be invoked _asynchronously_
+by `Elixir`
 with as little overhead as possible.
 
-If keeping your app _focussed_
-sounds like a good idea to you,
-follow along with the adventure!
+If **keeping** your **app _focussed_**
+on it's **core business logic**
+sounds like a **_good_ idea** to you,
+follow along with us on the
+**`Elixir` invoke `Lambda` _quest_**!
 
 
 ## What? 💭
@@ -85,8 +87,6 @@ v1.4.12
 psql --version
 psql (PostgreSQL) 12.1
 ```
-
-
 If you are new to (or rusty on) Elixir/Phoenix,
 we _recommend_ reading
 [dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir) <br />
@@ -96,9 +96,27 @@ which is a "_my first phoenix app_".
 
 You don't need to have _any_ knowledge of AWS Lambda,
 but if you are curious to learn,
-read:
+read our beginner's guide:
 [dwyl/**learn-aws-lambda**](https://github.com/dwyl/learn-aws-lambda)
 
+
+#### Ensure you have `aws-ses-lambda` running!
+
+This example invokes our
+[**`aws-ses-lambda`**](https://github.com/dwyl/aws-ses-lambda),
+which as it's name suggests is a AWS Lambda function
+that handles sending email
+using AWS Simple Email Service (SES).
+The setup and deployment instructions
+are all included in
+[https://github.com/dwyl/aws-ses-lambda**#how**](https://github.com/dwyl/aws-ses-lambda#how-)
+
+You need to _deploy_ the Lambda function
+and _test_ it in the AWS console
+ensuring that it's working _before_
+attempting to invoke it from `Elixir`.
+
+With that done, let's get back to our quest!
 
 
 ### 1. Create a Phoenix Project 🆕
@@ -153,8 +171,11 @@ Finished in 0.04 seconds
 3 tests, 0 failures
 ```
 
+Having established that your Phoenix App works as expected,
+let's dive into the fun part!
 
-### 2. Add `ex_aws_lambda` dependency to `deps`
+
+### 2. Add `ex_aws_lambda` to `deps` 🎁
 
 We are using
 [`ex_aws_lambda`](https://github.com/ex-aws/ex_aws_lambda)
@@ -171,14 +192,101 @@ in the `mix.exs` file:
 
 
 ```elixir
-    {:ex_aws, "~> 2.1.0"},
-    {:ex_aws_lambda, "~> 2.0"},
-    {:hackney, "~> 1.9"},
-    {:poison, "~> 3.0"},
+{:ex_aws, "~> 2.1.0"},
+{:ex_aws_lambda, "~> 2.0"},
+{:hackney, "~> 1.9"},
+{:poison, "~> 3.0"},
 ```
+e.g:
+[mix.exs#L47-L52](https://github.com/dwyl/elixir-invoke-lambda-example/blob/b8a226a86f465781acc0d87d7e777bb637f605a8/mix.exs#L47-L52)
 
 Then run:
 
 ```sh
 mix deps.get
 ```
+
+### 3. Environment Variables 🔐
+
+In order to _invoke_ a AWS Lambda function
+(_and **specifically** our **`aws-ses-lambda`**_),
+we need a handful of Environment Variables to be defined.
+
+
+
+
+
+
+
+#### Invoke in `iex`
+
+In your terminal, open `iex`:
+
+```
+iex -S mix
+```
+
+Then _invoke_ the Lambda by typing
+`AppWeb.PageController.invoke`:
+
+```elixir
+iex(1)> AppWeb.PageController.invoke
+{:ok,
+ %{
+   "MessageId" => "010201703dd218c7-ae82fd07-9c08-4215-a4a9-4b723b98d8f3-000000",
+   "ResponseMetadata" => %{
+     "RequestId" => "def1b013-331e-4d10-848e-6f0dbd709434"
+   }
+ }}
+```
+
+
+
+### Trouble Shooting 🤷‍
+
+If you forget to include some data
+you will get a friendly error message
+e.g: In this case I didn't have
+the `RECIPIENT_EMAIL` environment variable defined
+so there was no "**To**" (_email address_) defined in the `event`:
+
+```elixir
+{:ok,
+ %{
+   "errorMessage" => "Missing required header 'To'.",
+   "errorType" => "InvalidParameterValue",
+   "trace" => ["InvalidParameterValue: Missing required header 'To'.",
+    "    at Request.extractError (/var/task/node_modules/aws-sdk/lib/protocol/query.js:50:29)",
+    "    at Request.callListeners (/var/task/node_modules/aws-sdk/lib/sequential_executor.js:106:20)",
+    "    at Request.emit (/var/task/node_modules/aws-sdk/lib/sequential_executor.js:78:10)",
+    "    at Request.emit (/var/task/node_modules/aws-sdk/lib/request.js:683:14)",
+    "    at Request.transition (/var/task/node_modules/aws-sdk/lib/request.js:22:10)",
+    "    at AcceptorStateMachine.runTo (/var/task/node_modules/aws-sdk/lib/state_machine.js:14:12)",
+    "    at /var/task/node_modules/aws-sdk/lib/state_machine.js:26:10",
+    "    at Request.<anonymous> (/var/task/node_modules/aws-sdk/lib/request.js:38:9)",
+    "    at Request.<anonymous> (/var/task/node_modules/aws-sdk/lib/request.js:685:12)",
+    "    at Request.callListeners (/var/task/node_modules/aws-sdk/lib/sequential_executor.js:116:18)"]
+ }}
+```
+> **Note**: _Obviously_ we don't _like_ the fact
+that the **`ex_aws`** package returned an
+`{:ok, %{"errorMessage" => "Missing required header 'To'."}` ...
+an **`:error`** should not be "**`:ok`**" ... 🙄
+but let's not get hung up on it.
+
+When we _did_ correctly set the `RECIPIENT_EMAIL` environment variable
+we got the following success message confirming the email was sent:
+```elixir
+{:ok,
+ %{
+   "MessageId" => "010201703dd218c7-ae82fd07-9c08-4215-a4a9-4b723b98d8f3-000000",
+   "ResponseMetadata" => %{
+     "RequestId" => "def1b013-331e-4d10-848e-6f0dbd709434"
+   }
+ }}
+```
+
+
+<br /> <br />
+`TODO:` open an issue on https://github.com/ex-aws/ex_aws_lambda/issues
+sharing a link to this repo for anyone considering using the package!
