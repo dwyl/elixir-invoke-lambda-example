@@ -25,9 +25,9 @@ such as sending/receiving emails and
 uploading/resizing/transcoding images/video.
 This non-core functionality
 still needs to work _flawlessly_
-but it will not be invoked directly by end-users.
+but it is not invoked _directly_ by end-users.
 Rather the Lambda functions
-will be invoked _asynchronously_
+are called _asynchronously_ and transparently
 by `Elixir`
 with as little overhead as possible.
 
@@ -93,7 +93,8 @@ and following the
 which is a "_my first phoenix app_".
 
 You don't need to have _any_ knowledge of AWS Lambda,
-but if you are curious to learn,
+just treat it as any other function call. <br />
+If you are _curious_ to learn more about Lambda,
 read our beginner's guide:
 [dwyl/**learn-aws-lambda**](https://github.com/dwyl/learn-aws-lambda)
 
@@ -105,16 +106,30 @@ This example invokes our
 which as it's name suggests is a AWS Lambda function
 that handles sending email
 using AWS Simple Email Service (SES).
-The setup and deployment instructions
-are all included in
-[**How**? section](https://github.com/dwyl/aws-ses-lambda#how-)
-
 You need to _deploy_ the Lambda function
 and _test_ it in the AWS console
 ensuring that it's working _before_
 attempting to invoke it from `Elixir`.
+The setup and deployment instructions
+are all included in
+[**How**? section](https://github.com/dwyl/aws-ses-lambda#how-).
 
-With that done, let's get back to our quest!
+This is what success looks like in AWS Lambda console:
+
+![aws-ses-lamda-response](https://user-images.githubusercontent.com/194400/74453847-e731d200-4e7a-11ea-9e2b-6907cd9a27ea.png)
+
+Our Lambda function responds with the following `JSON`:
+
+```json
+{
+  "ResponseMetadata": {
+    "RequestId": "f43c4f3d-1d9b-4646-bb27-8c3a8a7ad674"
+  },
+  "MessageId": "010201703f49f928-6860c2f3-5b6d-474a-be93-3faecefb1b3a-000000"
+}
+```
+
+With the Lambda working, let's get back to our quest!
 
 
 ### 1. Create a Phoenix Project 🆕
@@ -290,20 +305,6 @@ has the following format:
 ```
 
 So that's what we are expecting in the test above.
-
-The response of _your_ Lambda function might be different,
-but this is what ours looks like in AWS Lambda console:
-
-![aws-ses-lamda-response](https://user-images.githubusercontent.com/194400/74453847-e731d200-4e7a-11ea-9e2b-6907cd9a27ea.png)
-
-```json
-{
-  "ResponseMetadata": {
-    "RequestId": "f43c4f3d-1d9b-4646-bb27-8c3a8a7ad674"
-  },
-  "MessageId": "010201703f49f928-6860c2f3-5b6d-474a-be93-3faecefb1b3a-000000"
-}
-```
 
 
 #### 4.1 Run the Test and Watch it _Fail_! 🔴
