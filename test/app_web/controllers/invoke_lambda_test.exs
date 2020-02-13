@@ -9,7 +9,7 @@ defmodule AppWeb.InvokeLambdaControllerTest do
     }
 
     {:ok, %{"MessageId" => mid}} = AppWeb.InvokeLambdaController.invoke(payload)
-    IO.inspect mid, label: "MessageId"
+    # IO.inspect mid, label: "MessageId"
     assert String.length(mid) == 60
   end
 end

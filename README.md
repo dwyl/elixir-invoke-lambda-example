@@ -253,7 +253,7 @@ This way you _know_ the Lambda invocation
 works _exactly_ the way you expect it to!
 
 Create a _new_ file called
-`test/app_web/controllers/invoke_lambda_test.exs`
+[`test/app_web/controllers/invoke_lambda_test.exs`](https://github.com/dwyl/elixir-invoke-lambda-example/blob/master/test/app_web/controllers/invoke_lambda_test.exs)
 
 In that test file _type_
 (_or, let's be honest, copy-paste_)
@@ -378,7 +378,7 @@ learn how you implement things. 😜
 
 
 Create a new file called
-[`lib/app_web/controllers/invoke_lambda_controller.ex`]()
+[`lib/app_web/controllers/invoke_lambda_controller.ex`](https://github.com/dwyl/elixir-invoke-lambda-example/blob/master/lib/app_web/controllers/invoke_lambda_controller.ex)
 
 And add the following code to the file:
 
@@ -425,18 +425,46 @@ iex -S mix
 ```
 
 Then _invoke_ the Lambda by typing
-`AppWeb.PageController.invoke`:
+`AppWeb.InvokeLambdaController.invoke`
+and paste the following variable:
 
 ```elixir
-iex(1)> AppWeb.PageController.invoke
+payload = %{
+  name: "Elixir Lover",
+  email: System.get_env("RECIPIENT_EMAIL"),
+  template: "welcome"
+}
+```
+Then invoke the function:
+`AppWeb.InvokeLambdaController.invoke(payload)`
+
+e.g:
+
+```elixir
+iex(1)> payload = %{
+...(1)>   name: "Elixir Lover",
+...(1)>   email: System.get_env("RECIPIENT_EMAIL"),
+...(1)>   template: "welcome"
+...(1)> }
+%{
+  email: "nelson+elixir.invoke@gmail.com",
+  name: "Elixir Lover",
+  template: "welcome"
+}
+iex(2)> AppWeb.InvokeLambdaController.invoke(payload)
 {:ok,
  %{
-   "MessageId" => "010201703dd218c7-ae82fd07-9c08-4215-a4a9-4b723b98d8f3-000000",
+   "MessageId" => "010201703f79a728-7fbcc6e8-8780-4a08-a160-34467023b97e-000000",
    "ResponseMetadata" => %{
-     "RequestId" => "def1b013-331e-4d10-848e-6f0dbd709434"
+     "RequestId" => "30dfff01-35d1-4059-b0e8-3acdbd48a505"
    }
  }}
 ```
+
+Check your email inbox, you should expect to see something like this:
+
+![elixir-lover-email-received](https://user-images.githubusercontent.com/194400/74458691-fff1b600-4e81-11ea-8d09-49490c61baae.png)
+
 
 
 
