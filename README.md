@@ -5,11 +5,15 @@
 A basic example showing how to invoke AWS Lambda functions
 from Elixir/Phoenix Apps.
 
-<!--
-[![Build Status](https://img.shields.io/travis/dwyl/aws-lambda-deploy/master.svg?style=flat-square)](https://travis-ci.org/dwyl/aws-lambda-deploy)
-[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/aws-lambda-deploy/master.svg?style=flat-square)](http://codecov.io/github/dwyl/aws-lambda-deploy?branch=master)
-[![HitCount](http://hits.dwyl.com/dwyl/aws-lambda-deploy.svg)](http://hits.dwyl.com/dwyl/aws-lambda-deploy)
--->
+[![Build Status](https://img.shields.io/travis/dwyl/elixir-invoke-lambda-example
+/master.svg?style=flat-square)](https://travis-ci.org/dwyl/elixir-invoke-lambda-example
+)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/elixir-invoke-lambda-example
+/master.svg?style=flat-square)](http://codecov.io/github/dwyl/elixir-invoke-lambda-example
+?branch=master)
+[![HitCount](http://hits.dwyl.com/dwyl/elixir-invoke-lambda-example
+.svg)](http://hits.dwyl.com/dwyl/elixir-invoke-lambda-example
+)
 
 </div>
 <br />
@@ -470,23 +474,32 @@ Check your email inbox, you should expect to see something like this:
 <br /><br />
 
 
-### 6. Continuous Integration
+### 6. Continuous Integration [![Build Status](https://img.shields.io/travis/dwyl/elixir-invoke-lambda-example
+/master.svg?style=flat-square)](https://travis-ci.org/dwyl/elixir-invoke-lambda-example
+)
 
 This wouldn't be a dwyl example without
 independent verification that it _works_
 from our friends at Travis-CI!
 
-
 > If you're new to Travis-CI or Continuous Integration,
 see: https://github.com/dwyl/learn-travis
 
-
-
-
+The only thing _special_ about running at CI test
+that invokes a Lambda function that sends an email,
+is that we want to use the AWS SES _mailbox simulator_
+instead of sending lots of email to a _real_ address.
+see:
 https://docs.aws.amazon.com/ses/latest/DeveloperGuide/mailbox-simulator.html
 
+Set the **`RECIPIENT_EMAIL`** to "**success@simulator.amazonses.com**"
 
-success@simulator.amazonses.com
+e.g:
+[.travis.yml#L20](https://github.com/dwyl/elixir-invoke-lambda-example/blob/master/.travis.yml#L20)
+
+Works like a charm.
+
+
 
 ### 7. _Conclusion_!
 
