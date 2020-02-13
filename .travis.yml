@@ -1,18 +1,20 @@
 language: elixir
 elixir:
-  - 1.9
+- 1.9
 otp_release:
-  - 22.1.8
+- 22.1.8
 cache:
   directories:
-    - _build
-    - deps
+  - _build
+  - deps
 script:
-  - mix do deps.get, compile --warnings-as-errors, coveralls.json
+- mix do deps.get, compile --warnings-as-errors, coveralls.json
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+- bash <(curl -s https://codecov.io/bash)
 env:
   global:
-    - MIX_ENV=test
-    - AWS_REGION=eu-west-1
-    - RECIPIENT_EMAIL=success@simulator.amazonses.com
+  - MIX_ENV=test
+  - AWS_REGION=eu-west-1
+  - RECIPIENT_EMAIL=success@simulator.amazonses.com
+  - secure: KsLnrRPY78pmsAmauMqSwjQAe+WUKf/NAd9vRtvzdocqOzJ08W/33GGYanBsHVaOyt5+mBCEj9pFpLzgLLJWpbJLt/exsu0kZubySwAyf4nSleQmsBNU6pvU5t63ZAC1CQVpKNvuvZYfcarT0/YzC+PYln35v6pBJAeCTMvKJGKng5kQRxgnhD+PTFmK4TW8ZrXqzVcrNVvys5bPxDqDkOBBnfq80MiK3jt81cYBKEaPnnu9jbyDurzJ409w+TFSdrE32J+wldZMGnw20kC/auFRC09teNHBIHElng6GV/P/bakh5zuzpCtO3fnq5OVOAccSa3/kNKtvzhgAeMSWkl9lI9o3JUnco0d7diD45NRlwrXfLhg4ANsbg/j/oz+7wkS70a8Vgt9F6iYJNE6F4RJQQAQC2bNMJbbHRt1SEo6UAYwKzW6vvcQoUpfr56JOgIOvDaSQMD7AoV6Mu+Wm7TQhhdQHkja5OEHeG6R/I+JIx8A0jkIEF/pQa+oxp87F/CuMhCVTBn0p6vs+Cn45JUQhack1ISaQ0NQiViAUoQ/WeBbiYdShIESHgWM/WfooghP8G/GQbe2/5sBb4TbiI8Z1RKqdjl5/E1bolvIIwqJObuGCsyXDYZ/cRpYqmaijD23LjHLrZwXDLpVDcEn76hrp0yavLuF/AoJi+0RteR4=
+  - secure: vdhAciv5Ik3cNJ6qX1RIRea1nODAwn2Zj0g2FO0nSOHU04MLy0gfIfsKjLJT+g15doJHfkTiYeMfR05/552RzF4+Q8v/6bIbV1is7yBcpZjQO3m8L2E+9si99i5OCoKHCZiKyjOnCEtwz2hUVKU1J98t1d0Tng0hauo32qPW95bxGJoTl7RyI+rsNKn82iqpkobZ/b/fQg9mGca14/FviD1BZukuuYqhtbC/HKzP9TWB+GI3xKFNN4kdqQJWlDK43+fuIgeAYIjDei3+yaZeKn8AqYT+B+CXY22YOb3Deb4kNytfyYwcAJ8adEqFo8496XVIn0qv5iE26oQzyV+ALP+pUB/Sbu4trAsw8FYMhpOH5m6umy/S8m9Flsid1Dzai3cAkkhHUPbWs1Wgp2L5VBfE6ahgzMWuIup91/hI6ql97V6Fs202txBPeqo1m+L705piESRslrlqWJrUKS+GqMvGEfu1+5j7kmMWCYwkUEX88GTr7CiqJnjW4wlganzgodw5qTGVw8rh9fyG5Ve9QjNhyTr/0lInN81f3YCrbGZKBGtvy/mwFjL3I9mipbmP6vy6XYaUr1HXItbdOWLJrenGysN2Ho2fVC7dXLP6hv+2KdqhqNd46HcFmfIuHat744R2OxLOocHp1CWg9DULqsg3ceLedatMWLNq7/i3GoE=
