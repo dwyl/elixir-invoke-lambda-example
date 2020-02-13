@@ -587,10 +587,11 @@ so there was no "**To**" (_email address_) defined in the `event`:
  }}
 ```
 > **Note**: _Obviously_ we don't _like_ the fact
-that the **`ex_aws`** package returned an
+that the **`ex_aws`** package returned an <br />
 `{:ok, %{"errorMessage" => "Missing required header 'To'."}` ...
-an **`:error`** should not be "**`:ok`**" ... 🙄
+an **`:error`** should not be "**`:ok`**" ... 🙄 <br />
 but let's not get hung up on it.
+The **`ex_aws`** package _works_! 👍
 
 When we _did_ correctly set
 the `RECIPIENT_EMAIL_ADDRESS` environment variable, <br />
