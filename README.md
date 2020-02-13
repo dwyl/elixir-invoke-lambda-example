@@ -5,15 +5,9 @@
 A basic example showing how to invoke AWS Lambda functions
 from Elixir/Phoenix Apps.
 
-[![Build Status](https://img.shields.io/travis/dwyl/elixir-invoke-lambda-example
-elixir-invoke-lambda-example/master.svg?style=flat-square)](https://travis-ci.org/dwyl/elixir-invoke-lambda-example
-elixir-invoke-lambda-example)
-[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/elixir-invoke-lambda-example
-elixir-invoke-lambda-example/master.svg?style=flat-square)](http://codecov.io/github/dwyl/elixir-invoke-lambda-example
-elixir-invoke-lambda-example?branch=master)
-[![HitCount](http://hits.dwyl.com/dwyl/elixir-invoke-lambda-example
-elixir-invoke-lambda-example.svg)](http://hits.dwyl.com/dwyl/elixir-invoke-lambda-example
-elixir-invoke-lambda-example)
+[![Build Status](https://img.shields.io/travis/dwyl/elixir-invoke-lambda-example/master.svg?style=flat-square)](https://travis-ci.org/dwyl/elixir-invoke-lambda-example)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/elixir-invoke-lambda-example/master.svg?style=flat-square)](http://codecov.io/github/dwyl/elixir-invoke-lambda-example?branch=master)
+[![HitCount](http://hits.dwyl.com/dwyl/elixir-invoke-lambda-example.svg)](http://hits.dwyl.com/dwyl/elixir-invoke-lambda-example)
 
 </div>
 <br />
