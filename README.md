@@ -242,7 +242,7 @@ running the **`printenv`** commnad.
 see: https://github.com/dwyl/learn-environment-variables
 
 
-### 4. Write a Test! 🔴😮
+### 4. Write a Test! 😮
 
 Yes, even in these simple examples,
 we can still follow Test Driven Development
@@ -255,34 +255,142 @@ works _exactly_ the way you expect it to!
 Create a _new_ file called
 `test/app_web/controllers/invoke_lambda_test.exs`
 
+In that test file _type_
+(_or, let's be honest, copy-paste_)
+the following code:
+
+```elixir
+defmodule AppWeb.InvokeLambdaControllerTest do
+  use ExUnit.Case
+
+  test "Invoke the aws-ses-lambda-v1 Lambda Function!" do
+    payload = %{
+      name: "Elixir Lover",
+      email: "success@simulator.amazonses.com",
+      template: "welcome"
+    }
+
+    {:ok, %{"MessageId" => mid}} = AppWeb.InvokeLambdaController.invoke(payload)
+    IO.inspect mid, label: "MessageId"
+    assert String.length(mid) == 60
+  end
+end
+```
+
+We know from reading the `ex_aws` tests
+and from _running_ our lambda function
+that the Lambda SES response `Map`
+has the following format:
+
+```elixir
+{:ok, %{
+    "MessageId" => "010201703dd218c7-ae82fd07-9c08-4215-a4a9-4b723b98d8f3-000000",
+    "ResponseMetadata" => %{
+    "RequestId" => "def1b013-331e-4d10-848e-6f0dbd709434"
+  }
+}}
+```
+
+So that's what we are expecting in the test above.
+
+The response of _your_ Lambda function might be different,
+but this is what ours looks like in AWS Lambda console:
+
+![aws-ses-lamda-response](https://user-images.githubusercontent.com/194400/74453847-e731d200-4e7a-11ea-9e2b-6907cd9a27ea.png)
+
+```json
+{
+  "ResponseMetadata": {
+    "RequestId": "f43c4f3d-1d9b-4646-bb27-8c3a8a7ad674"
+  },
+  "MessageId": "010201703f49f928-6860c2f3-5b6d-474a-be93-3faecefb1b3a-000000"
+}
+```
+
+
+#### 4.1 Run the Test and Watch it _Fail_! 🔴
+
+Now that we have written our test for the `invoke` function,
+we can _run_ the test an watch it _fail_:
+
+```sh
+mix test test/app_web/controllers/invoke_lambda_test.exs
+```
+
+You should see output similar to the following:
+```elixir
+
+Compiling 1 file (.ex)
+
+15:51:10.166 [info]  Already up
+warning: AppWeb.InvokeLambdaController.invoke/1 is undefined (module AppWeb.InvokeLambdaController is not available or is yet to be defined)
+  test/app_web/controllers/invoke_lambda_test.exs:19: AppWeb.InvokeLambdaControllerTest."test Invoke the aws-ses-lambda-v1 Lambda Function!"/1
+
+  1) test Invoke the aws-ses-lambda-v1 Lambda Function! (AppWeb.InvokeLambdaControllerTest)
+     test/app_web/controllers/invoke_lambda_test.exs:4
+     ** (UndefinedFunctionError) function AppWeb.InvokeLambdaController.invoke/1 is undefined (module AppWeb.InvokeLambdaController is not available)
+     code: {:ok, %{"MessageId" => mid}} = AppWeb.InvokeLambdaController.invoke(payload)
+     stacktrace:
+       AppWeb.InvokeLambdaController.invoke(%{email: "nelson+elixir.invoke@dwyl.com", name: "Elixir Lover", template: "welcome"})
+       test/app_web/controllers/invoke_lambda_test.exs:19: (test)
+
+Finished in 0.04 seconds
+1 test, 1 failure
+```
+
+This is just telling us that the
+`AppWeb.InvokeLambdaController.invoke`
+function does not _exist_.
+This is not "_news_" as we have not yet _created_ it!
+But it's good to know that the test _runs_.
+There's enough _red_ in that failed test output
+for us to feel satisfied that we've completed
+the "Red" stage of the TDD
+["Red, Green, Refactor"](https://github.com/dwyl/learn-tdd#how)
+cycle. 🔴
+
+```elixir
+1 test, 1 failure
+```
 
 
 
-
-
+<!--
 > **Side note**:
 I did't get much out of reading the
 [Docs](https://hexdocs.pm/ex_aws/ExAws.html)
-for [`ex_aws`](https://github.com/ex-aws/ex_aws)
+for [`ex_aws`](https://github.com/ex-aws/ex_aws) <br />
 so I ended up reading the _tests_
 in order to undestand how the package works:
-[/test/ex_aws/auth_test.exs](https://github.com/ex-aws/ex_aws/blob/ecd51b1965909119ee597d6c0783334e30e59e58/test/ex_aws/auth_test.exs)
+[/test/ex_aws/auth_test.exs](https://github.com/ex-aws/ex_aws/blob/ecd51b1965909119ee597d6c0783334e30e59e58/test/ex_aws/auth_test.exs) <br />
 Don't bother reading the tests for
 [`ex_aws_lambda`](https://github.com/ex-aws/ex_aws_lambda)
-they
-[aren't very good](https://github.com/dwyl/aws-ses-lambda/issues/8#issuecomment-585360225)
-... <br />
+they are
+["incomplete"](https://github.com/dwyl/aws-ses-lambda/issues/8#issuecomment-585360225)
+... 😞 <br />
 Moral of the story:
 **_always_ write good tests** for your code.
 Other people will read them
 and ~~_totally_ judge you as a developer~~
 learn how you implement things. 😜
-
+-->
 
 
 
 
 ### 5. Write the `invoke` Function to Make the Test _Pass_! ✅
+
+
+
+
+```elixir
+
+def invoke(payload) do
+  ExAws.Lambda.invoke("aws-ses-lambda-v1", payload, "no_context")
+  |> ExAws.request(region: System.get_env("AWS_REGION"))
+end
+
+```
 
 
 
@@ -308,6 +416,17 @@ iex(1)> AppWeb.PageController.invoke
    }
  }}
 ```
+
+
+
+### 6. Continuous Integration!
+
+
+https://docs.aws.amazon.com/ses/latest/DeveloperGuide/mailbox-simulator.html
+
+
+success@simulator.amazonses.com
+
 
 <br /><br />
 
