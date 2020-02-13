@@ -35,9 +35,9 @@ with as little overhead as possible.
 
 If **keeping** your **app _focussed_**
 on it's **core business logic**
-sounds like a **_good_ idea** to you,
+sounds like a **_good_ idea** to you, <br />
 follow along with us on the
-**`Elixir` invoke `Lambda` _quest_**!
+**`Elixir` invoke `Lambda` _quest_**! 🏔️
 
 
 ## What? 💭
@@ -212,9 +212,52 @@ In order to _invoke_ a AWS Lambda function
 (_and **specifically** our **`aws-ses-lambda`**_),
 we need a handful of Environment Variables to be defined.
 
+To speed this up, we created an
+[`.env_sample`]()
+file that has all the Environment Variables you need:
+
+```
+export AWS_REGION=eu-west-1
+export AWS_ACCESS_KEY_ID=YOURACCESSKEYID
+export AWS_SECRET_ACCESS_KEY=SUPERSECRETACCESSKEY
+export SENDER_EMAIL_ADDRESS=your.ses.verified@email.com
+export RECIPIENT_EMAIL="yourname+elixir.invoke@gmail.com"
+```
+
+Copy this file into a _new_ file called `.env`.
+e.g:
+
+```sh
+cp .env_sample .env && echo ".env\n" > .gitignore
+```
+
+Then update the values to your _real_ ones!
+
+Finally run `source .env` in your terminal.
+Confirm that
+
+
+> Note: If you are new to Environment Variables,
+see: https://github.com/dwyl/learn-environment-variables
+
+
+### 4. Write a Test! 🔴😮
+
+Yes, even in these simple examples,
+we can still follow Test Driven Development
+([TDD](https://github.com/dwyl/learn-tdd)),
+in fact it's a _really_ good idea
+to _always_ write tests!
+This way you _know_ the Lambda invocation
+works _exactly_ the way you expect it to!
 
 
 
+
+
+
+
+### 5. Write the `invoke` Function to Make the Test _Pass_! ✅
 
 
 

@@ -8,7 +8,7 @@ defmodule AppWeb.PageController do
   def invoke do
     payload = %{
       name: "Elixir Lover",
-      email: System.get_env("RECIPIENT_EMAIL"),
+      email: System.get_env("RECIPIENT_EMAIL_ADDRESS"),
       template: "welcome"
     }
     ExAws.Lambda.invoke("aws-ses-lambda-v1", payload, "no_context")
