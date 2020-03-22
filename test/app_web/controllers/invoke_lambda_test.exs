@@ -5,11 +5,13 @@ defmodule AppWeb.InvokeLambdaControllerTest do
     payload = %{
       name: "Elixir Lover",
       email: System.get_env("RECIPIENT_EMAIL_ADDRESS"),
-      template: "welcome"
+      template: "welcome",
+      id: "1"
     }
 
-    {:ok, %{"MessageId" => mid}} = AppWeb.InvokeLambdaController.invoke(payload)
-    # IO.inspect mid, label: "MessageId"
-    assert String.length(mid) == 60
+    {:ok, response} = AppWeb.InvokeLambdaController.invoke(payload)
+    # IO.inspect(response, label: "response")
+    message_id = Map.get(response, "message_id")
+    assert String.length(message_id) == 60
   end
 end
