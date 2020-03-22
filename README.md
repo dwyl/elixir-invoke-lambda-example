@@ -284,14 +284,15 @@ defmodule AppWeb.InvokeLambdaControllerTest do
   test "Invoke the aws-ses-lambda-v1 Lambda Function!" do
     payload = %{
       name: "Elixir Lover",
-      email: "success@simulator.amazonses.com",
-      template: "welcome"
+      email: System.get_env("RECIPIENT_EMAIL_ADDRESS"),
+      template: "welcome",
+      id: "1"
     }
 
-    {:ok, %{"MessageId" => mid}} = AppWeb.InvokeLambdaController.invoke(payload)
-    IO.inspect mid, label: "MessageId"
-    assert String.length(mid) == 60
-  end
+    {:ok, response} = AppWeb.InvokeLambdaController.invoke(payload)
+    # IO.inspect(response, label: "response")
+    message_id = Map.get(response, "message_id")
+    assert String.length(message_id) == 60  end
 end
 ```
 
@@ -302,10 +303,13 @@ has the following format:
 
 ```elixir
 {:ok, %{
-    "MessageId" => "010201703dd218c7-ae82fd07-9c08-4215-a4a9-4b723b98d8f3-000000",
-    "ResponseMetadata" => %{
-    "RequestId" => "def1b013-331e-4d10-848e-6f0dbd709434"
-  }
+  "email" => "testy.mctestface@gmail.com",
+  "id" => 42,
+  "message_id" => "0102017103df5cb1-27a0d3b3-bf06-42f9-924b-51df72e096da",
+  "name" => "Elixir Lover",
+  "request_id" => "28375a56-edf1-40a1-b2ee-cf42631391c2",
+  "status" => "Sent",
+  "template" => "welcome"
 }}
 ```
 
@@ -439,7 +443,8 @@ Paste the following `payload` variable:
 payload = %{
   name: "Elixir Lover",
   email: System.get_env("RECIPIENT_EMAIL_ADDRESS"),
-  template: "welcome"
+  template: "welcome",
+  id: 42
 }
 ```
 
@@ -455,21 +460,25 @@ Sample output from `iex`:
 iex(1)> payload = %{
 ...(1)>   name: "Elixir Lover",
 ...(1)>   email: System.get_env("RECIPIENT_EMAIL"),
-...(1)>   template: "welcome"
+...(1)>   template: "welcome",
+...(1)>   id: 42
 ...(1)> }
 %{
   email: "nelson+elixir.invoke@gmail.com",
   name: "Elixir Lover",
-  template: "welcome"
+  template: "welcome",
+  id: 42
 }
 iex(2)> AppWeb.InvokeLambdaController.invoke(payload)
-{:ok,
- %{
-   "MessageId" => "010201703f79a728-7fbcc6e8-8780-4a08-a160-34467023b97e-000000",
-   "ResponseMetadata" => %{
-     "RequestId" => "30dfff01-35d1-4059-b0e8-3acdbd48a505"
-   }
- }}
+{:ok, %{
+  "email" => "testy.mctestface@gmail.com",
+  "id" => 42,
+  "message_id" => "0102017103df5cb1-27a0d3b3-bf06-42f9-924b-51df72e096da",
+  "name" => "Elixir Lover",
+  "request_id" => "28375a56-edf1-40a1-b2ee-cf42631391c2",
+  "status" => "Sent",
+  "template" => "welcome"
+}}
 ```
 
 Check your email inbox, you should expect to see something like this:
@@ -597,13 +606,15 @@ When we _did_ correctly set
 the `RECIPIENT_EMAIL_ADDRESS` environment variable, <br />
 we got the following success message confirming the email was sent:
 ```elixir
-{:ok,
- %{
-   "MessageId" => "010201703dd218c7-ae82fd07-9c08-4215-a4a9-4b723b98d8f3-000000",
-   "ResponseMetadata" => %{
-     "RequestId" => "def1b013-331e-4d10-848e-6f0dbd709434"
-   }
- }}
+{:ok, %{
+  "email" => "testy.mctestface@gmail.com",
+  "id" => 42,
+  "message_id" => "0102017103df5cb1-27a0d3b3-bf06-42f9-924b-51df72e096da",
+  "name" => "Elixir Lover",
+  "request_id" => "28375a56-edf1-40a1-b2ee-cf42631391c2",
+  "status" => "Sent",
+  "template" => "welcome"
+}}
 ```
 
 
