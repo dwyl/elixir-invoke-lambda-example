@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 config :app, App.Repo,
@@ -15,4 +15,4 @@ config :app, AppWeb.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
