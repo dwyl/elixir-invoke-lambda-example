@@ -77,14 +77,15 @@ before beginning.
 
 ```sh
 elixir -v
-Elixir 1.10.1 (compiled with Erlang/OTP 22)
+Elixir 1.16.0 (compiled with Erlang/OTP 26)
 
 mix phx.new -v
-v1.4.13
+Phoenix installer v1.7.10
 
 psql --version
-psql (PostgreSQL) 12.1
+psql (PostgreSQL) 14.8
 ```
+
 If you are new to (or rusty on) Elixir/Phoenix,
 we _recommend_ reading
 [dwyl/**learn-elixir**](https://github.com/dwyl/learn-elixir) <br />
